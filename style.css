@@ -23,5 +23,6 @@ img {
 }
 
 .turns {
-    margin: 20px;
+    color: blue;
+    text-align: center;
 }

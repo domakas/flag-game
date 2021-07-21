@@ -1,37 +1,67 @@
+/* FLAG GAME */
+
+
 const takeOne = document.querySelector('.button__takeone');
 const takeTwo = document.querySelector('.button__taketwo');
 const reset = document.querySelector('.button__reset');
-let buffer = 0;
-let flagCount = 0;
+const flags = document.querySelectorAll('img');
+const turn = document.querySelector('.turns');
+const info = document.querySelector('.option');
+
+let counter = 0;
+let state = 1;
 
 takeOne.addEventListener("click", () => {
-    document.querySelector('.turns').innerHTML = "You took one!";
-    buffer = 1;
+    info.innerHTML = "One flag was removed";
+    removeOne(counter);
+    counter++;
+    state++;
+    whosTurn();
 });
 
 takeTwo.addEventListener("click", () => {
-    document.querySelector('.turns').innerHTML = "You took two!";
-    buffer = 2;
+    info.innerHTML = "Two flags were removed";
+    removeTwo(counter);
+    counter += 2;
+    state++;
+    whosTurn();
 });
 
 reset.addEventListener("click", () => {
-    document.querySelector('.turns').innerHTML = "How many flags do you wish to take?";
-    buffer = 0;
+    info.innerHTML = "How many flags do you wish to take?";
+    resetAll();
+    state = 1;
+    whosTurn();
 });
 
-// if (buffer = 1) {
-//     const flag = document.querySelector('img');
-//     if (flagCount < 3) {
-//         flag.addEventListener("click", () => {
-//             flag.style.visibility = "hidden";
-//             flagCount++;
-//         });
-//     }
-// };
-// let flagCount = 0;
-// const flag = document.querySelector('img');
-// flag.addEventListener("click", () => {
-//     flag.style.visibility = "hidden";
-//     flagCount++;
-// });
-// console.log(flagCount);
+//functions
+
+function removeOne(counter) {
+    flags.forEach(flag => {
+        flags[counter].style.display = 'none';
+    })
+};
+
+function removeTwo(counter) {
+    flags.forEach(flag => {
+        flags[counter].style.display = 'none';
+        flags[counter + 1].style.display = 'none';
+    })
+};
+
+function resetAll() {
+    counter = 0;
+    flags.forEach(flag => {
+        flag.style.display = 'initial';
+    })
+};
+
+function whosTurn() {
+    if (state % 2 == 0) {
+        turn.style.color = 'red';
+        turn.innerHTML = "Opponent's turn";
+    } else if (!state % 2 == 0 || state == 1) {
+        turn.style.color = 'blue';
+        turn.innerHTML = "Your turn";
+    }
+};
